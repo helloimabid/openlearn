@@ -182,7 +182,7 @@ const ChatBot = () => {
 const socketRef = useRef(null);
 
 useEffect(() => {
-  const socket = new WebSocket('wss://d496-103-142-192-1.ngrok-free.app/ws/chat/');
+  const socket = new WebSocket("ws://194.195.119.244/ws/chat/");
   socketRef.current = socket;
 
   socket.onopen = () => {
@@ -620,7 +620,7 @@ const handleSend = () => {
               >
                 <Mic size={16} className="sm:hidden" />
                 <Mic size={18} className="hidden sm:block" />
-              </button>              <div className="relative flex-1 flex items-center">
+              </button>              <div className="relative flex items-center flex-1">
                 <textarea
                   ref={textareaRef}
                   value={input}
