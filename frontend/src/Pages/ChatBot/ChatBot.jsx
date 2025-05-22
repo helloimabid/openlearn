@@ -692,7 +692,7 @@ const ChatBot = () => {
                     </div>
                     <div className="p-2.5 sm:p-4 rounded-2xl shadow-md backdrop-blur-sm bg-gradient-to-r from-teal-700/90 to-teal-900/90 text-white border border-teal-600/30">
                       <p className="text-xs italic leading-relaxed sm:text-sm">
-                        ভাবছি ... দয়া করে অপেক্ষা করুন।
+                        ভাবছি ... 
                       </p>
                     </div>
                   </div>
