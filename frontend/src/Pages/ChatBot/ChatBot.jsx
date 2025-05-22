@@ -39,6 +39,7 @@ const ChatBot = () => {
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toastifyLoaded, setToastifyLoaded] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false); // Add flag to prevent duplicate calls
 
   const recognitionRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -47,13 +48,9 @@ const ChatBot = () => {
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null);
 
-  // Retrieve the API key from environment variables
-  // In a Create React App, environment variables must start with REACT_APP_
-  // For Vite, it would be import.meta.env.VITE_GEMINI_API_KEY
   const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
   useEffect(() => {
-    // Load Toastify JS and CSS from CDN
     if (
       !document.querySelector(
         'script[src="https://cdn.jsdelivr.net/npm/toastify-js"]'
@@ -242,31 +239,36 @@ const ChatBot = () => {
     }
   };
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+  const handleSend = () => {
+    if (!input.trim() || isProcessing) return;
 
-    const userInput = input.trim();
+    setIsProcessing(true);
+    const userMessageText = input.trim();
     const userMessage = {
-      from: "user",
       type: "text",
-      content: userInput,
+      content: userMessageText,
+      from: "user",
     };
 
-    setMessages((prevMessages) => {
-      const updatedMessages = [...prevMessages, userMessage];
-      sendToGeminiAPI(updatedMessages, userInput);
-      return updatedMessages;
-    });
+    // Calculate new messages array first
+    const updatedMessages = [...messages, userMessage];
+
+    // Update state and then trigger API call
+    setMessages(updatedMessages);
+    sendToGeminiAPI(updatedMessages, userMessageText);
 
     setInput("");
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-    }
   };
 
   const sendToGeminiAPI = async (currentMessages, currentUserInput) => {
-    // Use the geminiApiKey read from process.env at the component level
+    console.log("🚀 sendToGeminiAPI called with:", {
+      currentMessages,
+      currentUserInput,
+      timestamp: new Date().toISOString(),
+    });
+
     if (!geminiApiKey) {
+      console.error("❌ No Gemini API key found");
       showToast(
         "API Key configure করা হয়নি। অনুগ্রহ করে অ্যাডমিনকে জানান।",
         "error"
@@ -298,11 +300,23 @@ const ChatBot = () => {
 
       const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
 
+      console.log("📤 Sending API request:", {
+        url: apiUrl.replace(geminiApiKey, "***API_KEY***"),
+        payload,
+        timestamp: new Date().toISOString(),
+      });
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
+      console.log(
+        "📥 API response status:",
+        response.status,
+        response.statusText
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -322,8 +336,8 @@ const ChatBot = () => {
         setIsBotTyping(false);
         return;
       }
-
       const result = await response.json();
+      console.log("📥 API response data:", result);
 
       if (
         result.candidates &&
@@ -333,6 +347,7 @@ const ChatBot = () => {
         result.candidates[0].content.parts.length > 0
       ) {
         const botText = result.candidates[0].content.parts[0].text;
+        console.log("✅ Bot response text:", botText);
         const botMessage = {
           from: "bot",
           type: "text",
@@ -390,6 +405,7 @@ const ChatBot = () => {
       ]);
     } finally {
       setIsBotTyping(false);
+      setIsProcessing(false);
     }
   };
 
@@ -417,6 +433,9 @@ const ChatBot = () => {
   };
 
   const selectSubject = (subject) => {
+    if (isProcessing) return;
+
+    setIsProcessing(true);
     setSelectedSubject(subject);
     setMobileMenuOpen(false);
     const subjectName = getSubjectName(subject);
@@ -428,13 +447,15 @@ const ChatBot = () => {
       from: "user",
     };
 
-    setMessages((prevMessages) => {
-      const updatedMessages = [...prevMessages, userMessage];
-      sendToGeminiAPI(updatedMessages, userMessageText);
-      return updatedMessages;
-    });
+    // Calculate new messages array first
+    const updatedMessages = [...messages, userMessage];
+
+    // Update state and then trigger API call
+    setMessages(updatedMessages);
+    sendToGeminiAPI(updatedMessages, userMessageText);
   };
 
+  
   const getSubjectName = (subject) => {
     switch (subject) {
       case "physics":
@@ -635,9 +656,16 @@ const ChatBot = () => {
                       }`}
                     >
                       {msg.type === "text" ? (
-                        <p className="text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
-                          {msg.content}
-                        </p>
+                        msg.from === "bot" ? (
+                          <div
+                            className="text-xs leading-relaxed whitespace-pre-wrap sm:text-sm"
+                            dangerouslySetInnerHTML={{ __html: msg.content }}
+                          />
+                        ) : (
+                          <p className="text-xs leading-relaxed whitespace-pre-wrap sm:text-sm">
+                            {msg.content}
+                          </p>
+                        )
                       ) : msg.type === "file" ? (
                         <div className="flex items-center gap-1 sm:gap-2">
                           <Paperclip size={14} className="sm:size-4" />
@@ -664,7 +692,7 @@ const ChatBot = () => {
                     </div>
                     <div className="p-2.5 sm:p-4 rounded-2xl shadow-md backdrop-blur-sm bg-gradient-to-r from-teal-700/90 to-teal-900/90 text-white border border-teal-600/30">
                       <p className="text-xs italic leading-relaxed sm:text-sm">
-                        বট লিখছে...
+                        ভাবছি ... দয়া করে অপেক্ষা করুন।
                       </p>
                     </div>
                   </div>
