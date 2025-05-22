@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: openlearn
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./dist
+    headers:
+      - path: /**/*.js
+        name: Content-Type
+        value: application/javascript
+      - path: /**/*.mjs
+        name: Content-Type
+        value: application/javascript
+      - path: /**/*.jsx
+        name: Content-Type
+        value: application/javascript
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
