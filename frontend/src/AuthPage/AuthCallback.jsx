@@ -26,7 +26,9 @@ const AuthCallback = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="w-12 h-12 border-t-2 border-b-2 border-teal-500 rounded-full animate-spin mb-4"></div>
-      <h2 className="text-xl text-white font-medium">Processing your login...</h2>
+      <h2 className="text-xl text-white font-medium">
+        Processing your login...
+      </h2>
     </div>
   );
 };

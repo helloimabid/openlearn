@@ -1,0 +1,17 @@
+/* Animation for the lab notice banner */
+.background-animate {
+  background-size: 400%;
+  animation: AnimateGradient 3s ease infinite;
+}
+
+@keyframes AnimateGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
