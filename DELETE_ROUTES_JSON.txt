@@ -1,0 +1,15 @@
+DELETE THE routes.json FILE
+
+Since we are now using vercel.json with the "rewrites" configuration, you should delete the routes.json file before deployment.
+
+The vercel.json file properly configures the SPA routing with:
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+
+This configuration tells Vercel to serve the index.html file for all routes, allowing your React Router to handle client-side routing correctly.
