@@ -789,29 +789,3 @@ const ChatBot = () => {
 
 export default ChatBot;
 
-/*
-// How to use this component:
-// 1. Ensure you have REACT_APP_GEMINI_API_KEY set in your .env file for Create React App
-//    (e.g., REACT_APP_GEMINI_API_KEY=your_actual_api_key)
-//    For Vite, use VITE_GEMINI_API_KEY and access it via import.meta.env.VITE_GEMINI_API_KEY.
-//
-// 2. Import and use the ChatBot component in your application:
-//
-// import React from 'react';
-// import ChatBot from './ChatBot'; // Assuming ChatBot.jsx is in the same directory
-// import './App.css'; // Or your main CSS file
-//
-// function App() {
-//   return (
-//     <div className="App">
-//       {/* Optional: Add a header or other layout elements around the ChatBot *\/}
-//       {/* <header className="App-header"><h1>My Chat Application</h1></header> *\/}
-//       <ChatBot />
-//       {/* Optional: Add a footer *\/}
-//       {/* <footer><p>&copy; 2024 My Chat App</p></footer> *\/}
-//     </div>
-//   );
-// }
-//
-// export default App;
-*/
