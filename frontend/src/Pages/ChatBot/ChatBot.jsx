@@ -182,7 +182,7 @@ const ChatBot = () => {
 const socketRef = useRef(null);
 
 useEffect(() => {
-  const socket = new WebSocket("ws://194.195.119.244/ws/chat/");
+  const socket = new WebSocket("wss://194.195.119.244/ws/chat/");
   socketRef.current = socket;
 
   socket.onopen = () => {
