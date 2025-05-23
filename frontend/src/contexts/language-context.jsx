@@ -85,6 +85,7 @@ const translations = {
     "nav.login": "Login",
     "nav.signup": "Sign Up",
     "nav.switchToBangla": "বাংলা",
+    "nav.benefits": "Benefits",
 
     // CTA section
     "cta.title": "Ready to Start Learning?",
