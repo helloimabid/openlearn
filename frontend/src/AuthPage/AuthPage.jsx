@@ -21,22 +21,36 @@ export default function AuthPage() {
   const navigate = useNavigate();
   const { user, signIn, signUp, signInWithProvider, signInWithOAuth } =
     useAuth();
+  // State declarations
+  const [tab, setTab] = useState("login");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null); // For inline login errors
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Renamed from showSuccessModal and successMessage will be removed
+  const [showAuthFeedbackModal, setShowAuthFeedbackModal] = useState(false);
+  const [authFeedbackModalConfig, setAuthFeedbackModalConfig] = useState({
+    type: "", // 'success' or 'error'
+    title: "",
+    message: "",
+    email: null,
+  });
 
   useEffect(() => {
-    if (user) {
+    if (user && !showAuthFeedbackModal) {
       if (location.pathname === "/auth") {
         const from = location.state?.from?.pathname || "/dashboard";
         navigate(from, { replace: true });
       }
     }
-  }, [user, navigate, location.state, location.pathname]);
-
-  // Get tab from URL query parameter
-  const [tab, setTab] = useState("login");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  }, [
+    user,
+    navigate,
+    location.state,
+    location.pathname,
+    showAuthFeedbackModal,
+  ]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -74,29 +88,97 @@ export default function AuthPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
+    e.stopPropagation(); // Prevent event bubbling
+    
+    // Prevent multiple submissions
+    if (isSubmitting) return;
+    
+    setError(null); // Clear inline errors for login
     setIsSubmitting(true);
 
     try {
       if (tab === "login") {
-        const { error } = await signIn(formData.email, formData.password);
-        if (error) throw error;
-      } else {
-        if (formData.password !== formData.confirmPassword) {
-          throw new Error("Passwords do not match");
+        const { error: signInError } = await signIn(
+          formData.email,
+          formData.password
+        );
+        if (signInError) {
+          setError(signInError.message || "Failed to sign in."); // Use inline error for login
         }
-        const { error } = await signUp(
+        // Successful login will trigger user state change and useEffect for navigation
+      } else {
+        // Signup logic
+        if (formData.password !== formData.confirmPassword) {
+          setAuthFeedbackModalConfig({
+            type: "error",
+            title: "Signup Failed",
+            message: "Passwords do not match. Please try again.",
+          });
+          setShowAuthFeedbackModal(true);
+          setIsSubmitting(false); // Stop submission
+          return; // Exit handleSubmit
+        }
+
+        // Call signUp and wait for the response
+        const result = await signUp(
           formData.email,
           formData.password,
-          formData.firstName,
-          formData.lastName
+          {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+          }
         );
-        if (error) throw error;
-        setError("Please check your email to verify your account.");
-        setTab("login");
+
+        // Check if there was an error in the response
+        if (result.error) {
+          setAuthFeedbackModalConfig({
+            type: "error",
+            title: "Signup Failed",
+            message:
+              result.error ||
+              "An error occurred during signup. Please try again.",
+          });
+          setShowAuthFeedbackModal(true);
+          return;
+        }
+
+        // If we get here, signup was successful
+        setAuthFeedbackModalConfig({
+          type: "success",
+          title: "Account Created!",
+          message:
+            "We've sent a confirmation email. Please check your inbox and click the verification link to activate your account.",
+          email: formData.email,
+        });
+        setShowAuthFeedbackModal(true);
+        
+        // Clear the form after successful signup
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: formData.email, // Keep email for reference
+          password: "",
+          confirmPassword: "",
+          rememberMe: false,
+          agreeToTerms: false,
+        });
       }
     } catch (err) {
-      setError(err.message || "An error occurred. Please try again.");
+      console.error('Authentication error:', err);
+      // Only show error in login tab or if we don't have an error state yet
+      if (tab === "login" && !error) {
+        setError(
+          err.message || "An unexpected error occurred. Please try again."
+        );
+      } else if (tab === "signup") {
+        // Handle signup errors in the modal
+        setAuthFeedbackModalConfig({
+          type: "error",
+          title: "Signup Failed",
+          message: err.message || "An unexpected error occurred during signup.",
+        });
+        setShowAuthFeedbackModal(true);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -116,7 +198,6 @@ export default function AuthPage() {
       setIsLoading(true);
       setError(null);
       await signInWithOAuth("google");
-      // Redirect will happen automatically via the OAuth flow
     } catch (error) {
       console.error("Google login error:", error.message);
       setError(
@@ -157,8 +238,6 @@ export default function AuthPage() {
         <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="absolute top-[30%] -left-40 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-3xl"></div>
       </div>
-
-      {/* Back to Home button always at top left */}
       <a
         href="/"
         className="fixed z-20 flex items-center gap-2 p-2 text-white transition-all duration-200 rounded-md top-2 left-2 sm:top-4 sm:left-4 sm:p-3 hover:text-teal-400 hover:bg-white/5"
@@ -166,13 +245,8 @@ export default function AuthPage() {
         <ArrowLeft className="w-5 h-5" />
         <span className="text-sm sm:text-base">Back to Home</span>
       </a>
-
       <div className="relative z-10 w-full max-w-md">
-        <div className="flex justify-center mb-8">
-          {/* <div className="flex items-center gap-2">
-              <img src={logoImage} alt="OpenLearn Logo" className="w-auto h-8" />
-            </div> */}
-        </div>
+        <div className="flex justify-center mb-8"></div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -216,15 +290,12 @@ export default function AuthPage() {
                 <span className="relative z-10">Sign Up</span>
               </button>
             </div>
-
-            {/* Error display */}
-            {error && (
+            {error && tab === "login" && (
               <div className="flex items-center gap-2 p-3 mt-4 text-white border rounded-md bg-red-500/20 border-red-500/50">
                 <AlertCircle className="flex-shrink-0 w-5 h-5" />
                 <span>{error}</span>
               </div>
             )}
-
             <AnimatePresence mode="wait">
               {tab === "login" ? (
                 <motion.div
@@ -617,36 +688,44 @@ export default function AuthPage() {
                       <motion.button
                         variants={itemVariants}
                         type="submit"
-                        className={`w-full mt-6 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white p-3 rounded-lg font-medium transition-all duration-300 transform hover:translate-y-[-2px] flex items-center justify-center ${
-                          isSubmitting ? "opacity-80 cursor-not-allowed" : ""
-                        }`}
                         disabled={isSubmitting}
+                        className={`w-full px-6 py-3 text-white transition-all duration-300 rounded-lg ${
+                          isSubmitting
+                            ? "bg-teal-700 cursor-not-allowed"
+                            : "bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700"
+                        }`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleSubmit(e);
+                        }}
                       >
                         {isSubmitting ? (
-                          <svg
-                            className="w-5 h-5 mr-2 -ml-1 text-white animate-spin"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                          >
-                            <circle
-                              className="opacity-25"
-                              cx="12"
-                              cy="12"
-                              r="10"
-                              stroke="currentColor"
-                              strokeWidth="4"
-                            ></circle>
-                            <path
-                              className="opacity-75"
-                              fill="currentColor"
-                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                            ></path>
-                          </svg>
-                        ) : null}
-                        {isSubmitting
-                          ? "Creating Account..."
-                          : "Create Account"}
+                          <span className="flex items-center justify-center">
+                            <svg
+                              className="w-5 h-5 mr-2 -ml-1 text-white animate-spin"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            Processing...
+                          </span>
+                        ) : (
+                          "Create Account"
+                        )}
                       </motion.button>
                     </form>
                   </div>
@@ -662,50 +741,6 @@ export default function AuthPage() {
                       </div>
                     </div>
                     <div className="flex justify-center w-full mt-5">
-                      {/* <motion.button
-                          variants={itemVariants}
-                          className="bg-[#1e293b] border border-gray-700 text-white hover:bg-[#0f172a]/80 transition-all duration-300 p-3 rounded-lg flex items-center justify-center"
-                          onClick={() => handleSocialLogin("facebook")}
-                          disabled={isSubmitting}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="mr-2"
-                          >
-                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-                          </svg>
-                          Facebook
-                        </motion.button>
-                        <motion.button
-                          variants={itemVariants}
-                          className="bg-[#1e293b] border border-gray-700 text-white hover:bg-[#0f172a]/80 transition-all duration-300 p-3 rounded-lg flex items-center justify-center"
-                          onClick={() => handleSocialLogin("twitter")}
-                          disabled={isSubmitting}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="mr-2"
-                          >
-                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-                          </svg>
-                          Twitter
-                        </motion.button> */}
                       <motion.button
                         variants={itemVariants}
                         className="bg-[#1e293b] border border-gray-700 text-white hover:bg-[#0f172a]/80 transition-all duration-300 p-3 rounded-lg flex items-center justify-center gap-2 w-64 font-medium"
@@ -740,6 +775,108 @@ export default function AuthPage() {
           </div>
         </motion.div>
       </div>
+      <AnimatePresence>
+        {showAuthFeedbackModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-md p-6 text-white bg-gradient-to-br from-[#1e293b]/90 to-[#1e293b]/70 border border-gray-700/50 backdrop-blur-sm rounded-xl shadow-xl"
+            >
+              <div className="flex flex-col items-center text-center">
+                <div
+                  className={`flex items-center justify-center w-16 h-16 mb-4 rounded-full ${
+                    authFeedbackModalConfig.type === "success"
+                      ? "bg-gradient-to-br from-teal-500/30 to-teal-400/10"
+                      : "bg-gradient-to-br from-red-500/30 to-red-400/10"
+                  }`}
+                >
+                  {authFeedbackModalConfig.type === "success" ? (
+                    <Mail className="w-8 h-8 text-teal-400" />
+                  ) : (
+                    <AlertCircle className="w-8 h-8 text-red-400" />
+                  )}
+                </div>
+                <h3 className="mb-2 text-xl font-bold">
+                  {authFeedbackModalConfig.title}
+                </h3>
+                <p className="mb-6 text-gray-300">
+                  {authFeedbackModalConfig.message}
+                  {authFeedbackModalConfig.type === "success" &&
+                    authFeedbackModalConfig.email && (
+                      <>
+                        {" "}
+                        To{" "}
+                        <span className="font-medium text-teal-400">
+                          {authFeedbackModalConfig.email}
+                        </span>
+                        .
+                      </>
+                    )}
+                </p>
+                <div className="flex gap-3">
+                  {authFeedbackModalConfig.type === "success" ? (
+                    <>
+                      <button
+                        onClick={() => {
+                          setShowAuthFeedbackModal(false);
+                          setTab("login");
+                          setFormData({
+                            firstName: "",
+                            lastName: "",
+                            email: "",
+                            password: "",
+                            confirmPassword: "",
+                            rememberMe: false,
+                            agreeToTerms: false,
+                          });
+                        }}
+                        className="px-6 py-2 text-white transition-colors bg-teal-500 rounded-lg hover:bg-teal-600"
+                      >
+                        Go to Login
+                      </button>
+                      <button
+                        onClick={() => setShowAuthFeedbackModal(false)}
+                        className="px-6 py-2 text-gray-300 transition-colors border border-gray-600 rounded-lg hover:text-white hover:border-gray-500"
+                      >
+                        Close
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => {
+                          setShowAuthFeedbackModal(false);
+                          setFormData((prev) => ({
+                            ...prev,
+                            password: "",
+                            confirmPassword: "",
+                          }));
+                        }}
+                        className="px-6 py-2 text-white transition-colors bg-red-500 rounded-lg hover:bg-red-600"
+                      >
+                        Try Again
+                      </button>
+                      <button
+                        onClick={() => setShowAuthFeedbackModal(false)}
+                        className="px-6 py-2 text-gray-300 transition-colors border border-gray-600 rounded-lg hover:text-white hover:border-gray-500"
+                      >
+                        Close
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -134,11 +134,24 @@ export const AuthProvider = ({ children }) => {
         },
       });
 
-      if (error) throw error;
-      return data;
+      if (error) {
+        throw error;
+      }
+      
+      // Return both the data and the user object for better handling in the UI
+      return {
+        user: data.user,
+        session: data.session,
+        provider: data.provider,
+        url: data.url,
+        email: data.user?.email,
+        error: null
+      };
     } catch (error) {
-      setError(error.message);
-      throw error;
+      console.error('Signup error:', error);
+      const errorMessage = error.error_description || error.message || 'An error occurred during signup';
+      setError(errorMessage);
+      return { error: errorMessage };
     } finally {
       setIsLoading(false);
     }
