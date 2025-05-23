@@ -725,9 +725,67 @@ export default function AuthPage() {
                         )}
                       </motion.button>
 
-                      <div className="mt-4 text-sm text-center text-gray-400">
-                        After signing up, please check your email to verify your account.
-                      </div>
+                      <motion.div 
+                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                        animate={{ 
+                          opacity: 1, 
+                          y: 0, 
+                          scale: 1,
+                          boxShadow: ['0 0 0 0 rgba(94, 234, 212, 0.7)', '0 0 0 10px rgba(94, 234, 212, 0)', '0 0 0 0 rgba(94, 234, 212, 0)']
+                        }}
+                        transition={{ 
+                          delay: 0.3,
+                          opacity: { duration: 0.5 },
+                          y: { type: 'spring', stiffness: 100 },
+                          boxShadow: {
+                            repeat: Infinity,
+                            duration: 2,
+                            delay: 1,
+                            repeatDelay: 3
+                          }
+                        }}
+                        className="relative p-3 mt-4 text-sm text-teal-200 bg-gradient-to-r from-teal-900/40 to-teal-800/30 border border-teal-700/50 rounded-lg flex items-center justify-center gap-2 overflow-hidden"
+                      >
+                        {/* Animated background highlight */}
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-r from-teal-500/10 to-transparent"
+                          initial={{ x: '-100%' }}
+                          animate={{ x: '100%' }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: 'linear',
+                          }}
+                        />
+                        <motion.div
+                          animate={{
+                            scale: [1, 1.05, 1],
+                            rotate: [0, 2, -2, 0],
+                          }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: 'easeInOut',
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                          </svg>
+                        </motion.div>
+                        <motion.span 
+                          className="font-medium"
+                          animate={{
+                            textShadow: ['0 0 5px rgba(94, 234, 212, 0)', '0 0 10px rgba(94, 234, 212, 0.5)', '0 0 5px rgba(94, 234, 212, 0)']
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            repeatType: 'reverse'
+                          }}
+                        >
+                          After signing up, please check your email to verify your account.
+                        </motion.span>
+                      </motion.div>
                     </form>
                   </div>
                   <div className="p-6 border-t border-gray-700/50">
