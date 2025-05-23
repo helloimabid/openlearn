@@ -196,21 +196,33 @@ export default function LandingPage() {
                 </button>
 
                 <div className="flex flex-col gap-3 mt-2">
-                  <Link
-                    to="/auth"
-                    className="px-4 py-2 text-center text-teal-400 transition-colors border border-teal-400 rounded-md hover:bg-teal-400/10"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Login
-                  </Link>
-
-                  <Link
-                    to="/auth?tab=signup"
-                    className="px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Sign Up
-                  </Link>
+                  {user ? (
+                    <Link
+                      to="/dashboard"
+                      className="px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600 flex items-center justify-center"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Dashboard
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Link>
+                  ) : (
+                    <>
+                      <Link
+                        to="/auth"
+                        className="px-4 py-2 text-center text-teal-400 transition-colors border border-teal-400 rounded-md hover:bg-teal-400/10"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Login
+                      </Link>
+                      <Link
+                        to="/auth?tab=signup"
+                        className="px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        Sign Up
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -915,7 +927,7 @@ export default function LandingPage() {
                     strokeLinejoin="round"
                     className="mt-1 mr-2"
                   >
-                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                   <span>+880 1234 567890</span>
                 </li>
