@@ -289,7 +289,7 @@ export default function LandingPage() {
                 variants={fadeIn}
                 custom={0}
               >
-                {t("hero.title")}
+                Learn Science in Bangla & Master English with AI
               </motion.h1>
 
               <motion.p
@@ -297,7 +297,7 @@ export default function LandingPage() {
                 variants={fadeIn}
                 custom={1}
               >
-                {t("hero.subtitle")}
+                Your complete learning platform to understand Physics, Chemistry, Biology, and Math concepts in Bangla, plus improve your English language skills through interactive conversations.
               </motion.p>
 
               <motion.div
@@ -309,7 +309,7 @@ export default function LandingPage() {
                   to="/chatbot"
                   className="group bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-8 py-4 text-lg rounded-md flex items-center justify-center shadow-lg shadow-teal-900/20 transform transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-teal-900/30"
                 >
-                  Start Science Learning
+                  Learn Science in Bangla
                   <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                 </Link>
 
@@ -370,9 +370,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Our platform offers cutting-edge educational tools designed
-            specifically for Bengali-speaking students who want to excel in
-            science and English.
+            Our platform offers cutting-edge educational tools designed specifically for students who want to understand complex science subjects in Bangla and improve their English language skills with personalized AI assistance.
           </motion.p>
         </div>
 
