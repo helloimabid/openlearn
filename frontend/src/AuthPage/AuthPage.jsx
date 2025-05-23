@@ -105,7 +105,6 @@ export default function AuthPage() {
         if (signInError) {
           setError(signInError.message || "Failed to sign in."); // Use inline error for login
         }
-        // Successful login will trigger user state change and useEffect for navigation
       } else {
         // Signup logic
         if (formData.password !== formData.confirmPassword) {
@@ -115,8 +114,17 @@ export default function AuthPage() {
             message: "Passwords do not match. Please try again.",
           });
           setShowAuthFeedbackModal(true);
-          setIsSubmitting(false); // Stop submission
-          return; // Exit handleSubmit
+          return;
+        }
+
+        if (!formData.agreeToTerms) {
+          setAuthFeedbackModalConfig({
+            type: "error",
+            title: "Terms Not Accepted",
+            message: "You must agree to the Terms of Service and Privacy Policy to sign up.",
+          });
+          setShowAuthFeedbackModal(true);
+          return;
         }
 
         // Call signUp and wait for the response
@@ -130,16 +138,8 @@ export default function AuthPage() {
         );
 
         // Check if there was an error in the response
-        if (result.error) {
-          setAuthFeedbackModalConfig({
-            type: "error",
-            title: "Signup Failed",
-            message:
-              result.error ||
-              "An error occurred during signup. Please try again.",
-          });
-          setShowAuthFeedbackModal(true);
-          return;
+        if (result?.error) {
+          throw new Error(result.error);
         }
 
         // If we get here, signup was successful
@@ -165,17 +165,14 @@ export default function AuthPage() {
       }
     } catch (err) {
       console.error('Authentication error:', err);
-      // Only show error in login tab or if we don't have an error state yet
-      if (tab === "login" && !error) {
-        setError(
-          err.message || "An unexpected error occurred. Please try again."
-        );
-      } else if (tab === "signup") {
-        // Handle signup errors in the modal
+      // Handle errors in the appropriate way based on the tab
+      if (tab === "login") {
+        setError(err.message || "An unexpected error occurred. Please try again.");
+      } else {
         setAuthFeedbackModalConfig({
           type: "error",
           title: "Signup Failed",
-          message: err.message || "An unexpected error occurred during signup.",
+          message: err.message || "An unexpected error occurred during signup. Please try again.",
         });
         setShowAuthFeedbackModal(true);
       }
@@ -689,7 +686,7 @@ export default function AuthPage() {
                         variants={itemVariants}
                         type="submit"
                         disabled={isSubmitting}
-                        className={`w-full px-6 py-3 text-white transition-all duration-300 rounded-lg ${
+                        className={`w-full px-6 py-3 mt-4 text-white transition-all duration-300 rounded-lg ${
                           isSubmitting
                             ? "bg-teal-700 cursor-not-allowed"
                             : "bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700"
@@ -727,6 +724,10 @@ export default function AuthPage() {
                           "Create Account"
                         )}
                       </motion.button>
+
+                      <div className="mt-4 text-sm text-center text-gray-400">
+                        After signing up, please check your email to verify your account.
+                      </div>
                     </form>
                   </div>
                   <div className="p-6 border-t border-gray-700/50">
@@ -781,7 +782,7 @@ export default function AuthPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
