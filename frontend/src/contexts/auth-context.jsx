@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
     const getUser = async () => {
       try {
         setIsLoading(true);
-        console.log("Checking user session...");
 
         // Use getSession instead of getUser to avoid AuthSessionMissingError
         const {
@@ -37,21 +36,16 @@ export const AuthProvider = ({ children }) => {
           error,
         } = await supabase.auth.getSession();
 
-        console.log("Session data:", session);
-
         if (error) {
           throw error;
         }
 
         if (session?.user) {
           setUser(session.user);
-          console.log("User authenticated:", session.user.email);
         } else {
           setUser(null);
-          console.log("No active session found");
         }
       } catch (error) {
-        console.error("Error getting user:", error);
         setError(error.message);
         setUser(null);
       } finally {
@@ -65,12 +59,9 @@ export const AuthProvider = ({ children }) => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state change:", event);
       if (session?.user) {
-        console.log("User signed in:", session.user.email);
         setUser(session.user);
       } else {
-        console.log("User signed out");
         setUser(null);
       }
       setIsLoading(false);
@@ -162,10 +153,8 @@ export const AuthProvider = ({ children }) => {
       if (error) throw error;
 
       setUser(null);
-      console.log("User signed out successfully");
     } catch (error) {
       setError(error.message);
-      console.error("Error signing out:", error);
       throw error;
     } finally {
       setIsLoading(false);
