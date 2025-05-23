@@ -196,21 +196,21 @@ export default function LandingPage() {
                 </button>
 
                 <div className="flex flex-col gap-3 mt-2">
-                  <a
-                    href="/auth"
+                  <Link
+                    to="/auth"
                     className="px-4 py-2 text-center text-teal-400 transition-colors border border-teal-400 rounded-md hover:bg-teal-400/10"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Login
-                  </a>
+                  </Link>
 
-                  <a
-                    href="/auth?tab=signup"
+                  <Link
+                    to="/auth?tab=signup"
                     className="px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign Up
-                  </a>
+                  </Link>
                 </div>
               </div>
             </motion.div>
