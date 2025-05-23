@@ -11,26 +11,26 @@ const LanguageContext = createContext({
 const translations = {
   en: {
     // Hero section
-    "hero.title": "Learn English with AI",
+    "hero.title": "OpenLearn: Science in Bangla & English Practice",
     "hero.subtitle":
-      "Master English through interactive conversations and personalized feedback",
+      "Master science subjects in Bangla and improve your English through interactive learning!",
     "hero.cta": "Get Started",
     "hero.scrollToExplore": "Scroll to explore",
-    "hero.learnScience": "Learn Science in Bangla",
-    "hero.practiceEnglish": "Practice English",
+    "hero.learnScience": "Explore Science in Bangla",
+    "hero.practiceEnglish": "Practice English Conversations",
 
     // Features section
-    "features.title": "Our Features",
-    "features.subtitle": "Powerful tools to enhance your learning experience",
+    "features.title": "Dual Learning Platform",
+    "features.subtitle": "Master both science and English in one place",
     "features.description":
-      "Your complete learning platform to understand Physics, Chemistry, Biology, and Math concepts in Bangla, plus improve your English language skills through interactive conversations.",
-    "features.conversationPractice.title": "English Conversation Practice",
+      "OpenLearn offers a unique combination of science education in Bangla and English language practice. Learn Physics, Chemistry, Biology, and Math in your native language while improving your English skills.",
+    "features.conversationPractice.title": "AI-Powered English Practice",
     "features.conversationPractice.description":
-      "Practice English conversations with our AI assistant and receive instant feedback on your pronunciation and grammar.",
-    "features.conversationPractice.cta": "Practice English",
-    "features.scienceTopics.title": "Science Topics in Bengali",
+      "Enhance your English speaking and comprehension skills with our AI conversation partner. Get real-time feedback on your pronunciation and grammar.",
+    "features.conversationPractice.cta": "Start Practicing English",
+    "features.scienceTopics.title": "Science Education in Bangla",
     "features.scienceTopics.description":
-      "Learn complex science concepts explained in Bengali through interactive conversations with our AI assistant.",
+      "Master complex science concepts in Bangla with our interactive AI tutor. Perfect for students who want to learn in their native language.",
     "features.scienceTopics.physics": "Physics",
     "features.scienceTopics.chemistry": "Chemistry",
     "features.scienceTopics.biology": "Biology",
@@ -38,12 +38,12 @@ const translations = {
     "features.scienceTopics.cta": "Learn Science in Bangla",
 
     // How it works section
-    "howItWorks.title": "How It Works",
-    "howItWorks.subtitle": "Simple steps to start your learning journey",
+    "howItWorks.title": "Start Learning Today",
+    "howItWorks.subtitle": "Simple steps to master science and English",
     "howItWorks.description":
-      "Follow these steps to get started with OpenLearn.",
-    "howItWorks.bengaliSectionTitle": "Learn Science in Bangla",
-    "howItWorks.englishSectionTitle": "Practice English Conversations",
+      "Begin your journey with OpenLearn in just a few easy steps.",
+    "howItWorks.bengaliSectionTitle": "Science Learning in Bangla",
+    "howItWorks.englishSectionTitle": "English Language Practice",
     "howItWorks.step1.title": "Create an Account",
     "howItWorks.step1.description":
       "Sign up for free and set up your profile with your learning preferences.",
@@ -64,19 +64,19 @@ const translations = {
       "Practice English with AI and get instant feedback.",
 
     // Benefits section
-    "benefits.title": "Benefits",
-    "benefits.subtitle": "Why Choose OpenLearn?",
+    "benefits.title": "Why OpenLearn?",
+    "benefits.subtitle": "The Best of Both Worlds",
     "benefits.description":
-      "OpenLearn offers a unique blend of science education in Bangla and English language practice with AI.",
-    "benefits.benefit1.title": "Science in Bangla",
+      "OpenLearn combines quality science education in Bangla with effective English language practice, all in one platform.",
+    "benefits.benefit1.title": "Native Language Learning",
     "benefits.benefit1.description":
-      "Understand complex science concepts in your native language.",
-    "benefits.benefit2.title": "AI English Practice",
+      "Master complex science concepts in Bangla for better understanding and retention.",
+    "benefits.benefit2.title": "English Language Development",
     "benefits.benefit2.description":
-      "Practice English conversations with instant AI feedback.",
-    "benefits.benefit3.title": "Personalized Learning",
+      "Improve your English through interactive conversations with our AI tutor.",
+    "benefits.benefit3.title": "Personalized Education",
     "benefits.benefit3.description":
-      "Get a learning experience tailored to your needs.",
+      "Experience learning tailored to your pace and style, whether in Bangla or English.",
 
     // Navigation
     "nav.home": "Home",
@@ -120,11 +120,11 @@ const translations = {
   },
   bn: {
     // Hero section
-    "hero.title": "এআই এর সাহায্যে ইংরেজি শিখুন",
+    "hero.title": "OpenLearn: বাংলা ও ইংরেজিতে বিজ্ঞান অনুশীলন",
     "hero.subtitle":
-      "ইন্টারেক্টিভ কথোপকথন এবং ব্যক্তিগতকৃত প্রতিক্রিয়ার মাধ্যমে ইংরেজি আয়ত্ত করুন",
+      "বাংলায় বিজ্ঞান বিষয়গুলো আয়ত্ত করুন এবং ইন্টারঅ্যাকটিভ শিক্ষার মাধ্যমে আপনার ইংরেজি দক্ষতা বাড়ান!",
     "hero.cta": "শুরু করুন",
-    "hero.scrollToExplore": "অন্বেষণ করতে স্ক্রোল করুন",
+    "hero.scrollToExplore": "অনুসন্ধানের জন্য নিচে নামুন",
     "hero.learnScience": "বাংলায় বিজ্ঞান শিখুন",
     "hero.practiceEnglish": "ইংরেজি অনুশীলন করুন",
 
