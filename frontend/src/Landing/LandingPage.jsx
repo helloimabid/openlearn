@@ -387,6 +387,7 @@ export default function LandingPage() {
 
         <div className="grid gap-10 md:grid-cols-2">
           {/* Bengali Science Chatbot */}
+          
           <motion.div
             className="group bg-gradient-to-br from-[#1e293b]/70 to-[#1e293b]/40 border border-gray-700/50 backdrop-blur-sm overflow-hidden rounded-xl shadow-xl relative"
             initial={{ opacity: 0, x: -50 }}
@@ -432,10 +433,12 @@ export default function LandingPage() {
                   </span>
                 </div>
               </div>
-              <button className="group bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-lg flex items-center shadow-md shadow-teal-900/20 transition-all duration-300">
-                {t("features.scienceTopics.cta")}
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </button>
+              <Link to="/chatbot" className="inline-block group">
+                <div className="bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-lg flex items-center shadow-md shadow-teal-900/20 transition-all duration-300">
+                  {t("features.scienceTopics.cta")}
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
             </div>
           </motion.div>
 
@@ -474,10 +477,12 @@ export default function LandingPage() {
                   ))}
                 </div>
               </div>
-              <button className="group bg-purple-500 hover:bg-purple-600 text-white px-5 py-2.5 rounded-lg flex items-center shadow-md shadow-purple-900/20 transition-all duration-300">
-                {t("features.conversationPractice.cta")}
-                <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-              </button>
+              <Link to="/english" className="inline-block group">
+                <div className="bg-purple-500 hover:bg-purple-600 text-white px-5 py-2.5 rounded-lg flex items-center shadow-md shadow-purple-900/20 transition-all duration-300">
+                  {t("features.conversationPractice.cta")}
+                  <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
+                </div>
+              </Link>
             </div>
           </motion.div>
         </div>
