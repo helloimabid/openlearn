@@ -100,7 +100,7 @@ export default function LandingPage() {
                     href="#benefits"
                     className="text-gray-300 transition-colors hover:text-teal-400"
                   >
-                    Benefits
+                    {t("nav.benefits")}
                   </a>
                 </li>
               </ul>
@@ -111,7 +111,7 @@ export default function LandingPage() {
                 to="/dashboard"
                 className="flex items-center px-4 py-2 text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
               >
-                Dashboard
+                {t("nav.dashboard")}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Link>
             ) : (
@@ -161,7 +161,7 @@ export default function LandingPage() {
                         className="block py-2 text-gray-300 transition-colors hover:text-teal-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Features
+                        {t("nav.features")}
                       </a>
                     </li>
                     <li>
@@ -170,7 +170,7 @@ export default function LandingPage() {
                         className="block py-2 text-gray-300 transition-colors hover:text-teal-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        How It Works
+                        {t("nav.howItWorks")}
                       </a>
                     </li>
                     <li>
@@ -179,7 +179,7 @@ export default function LandingPage() {
                         className="block py-2 text-gray-300 transition-colors hover:text-teal-400"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Benefits
+                        {t("nav.benefits")}
                       </a>
                     </li>
                   </ul>
@@ -199,10 +199,10 @@ export default function LandingPage() {
                   {user ? (
                     <Link
                       to="/dashboard"
-                      className="px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600 flex items-center justify-center"
+                      className="flex items-center justify-center px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      Dashboard
+                      {t("nav.dashboard")}
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Link>
                   ) : (
@@ -212,14 +212,14 @@ export default function LandingPage() {
                         className="px-4 py-2 text-center text-teal-400 transition-colors border border-teal-400 rounded-md hover:bg-teal-400/10"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Login
+                        {t("nav.login")}
                       </Link>
                       <Link
                         to="/auth?tab=signup"
                         className="px-4 py-2 text-center text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Sign Up
+                        {t("nav.signup")}
                       </Link>
                     </>
                   )}
@@ -255,11 +255,10 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-white">
-                      Virtual Science Laboratory
+                      {t("labNotice.title")}
                     </h3>
                     <p className="text-purple-200">
-                      Experience interactive science experiments in our virtual
-                      lab!
+                      {t("labNotice.description")}
                     </p>
                   </div>
                 </div>
@@ -270,7 +269,7 @@ export default function LandingPage() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-5 py-2 text-white transition-colors bg-purple-600 rounded-md shadow-md group hover:bg-purple-700 shadow-purple-900/30"
                 >
-                  Visit Virtual Lab
+                  {t("labNotice.cta")}
                   <ExternalLink
                     size={16}
                     className="transition-transform group-hover:translate-x-1"
@@ -301,7 +300,7 @@ export default function LandingPage() {
                 variants={fadeIn}
                 custom={0}
               >
-                Learn Science in Bangla & Master English with AI
+                {t("hero.title")}
               </motion.h1>
 
               <motion.p
@@ -309,7 +308,7 @@ export default function LandingPage() {
                 variants={fadeIn}
                 custom={1}
               >
-                Your complete learning platform to understand Physics, Chemistry, Biology, and Math concepts in Bangla, plus improve your English language skills through interactive conversations.
+                {t("hero.subtitle")}
               </motion.p>
 
               <motion.div
@@ -321,7 +320,7 @@ export default function LandingPage() {
                   to="/chatbot"
                   className="group bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-8 py-4 text-lg rounded-md flex items-center justify-center shadow-lg shadow-teal-900/20 transform transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-teal-900/30"
                 >
-                  Learn Science in Bangla
+                  {t("hero.learnScience")}
                   <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
                 </Link>
 
@@ -329,7 +328,7 @@ export default function LandingPage() {
                   to="/english"
                   className="group border-2 border-purple-400 text-purple-300 hover:text-purple-200 hover:border-purple-300 hover:bg-purple-400/10 px-8 py-4 text-lg rounded-md flex items-center justify-center shadow-lg shadow-purple-900/10 transform transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-purple-900/20"
                 >
-                  Practice English
+                  {t("hero.practiceEnglish")}
                   <Mic className="w-5 h-5 ml-2 transition-transform group-hover:scale-110" />
                 </Link>
               </motion.div>
@@ -373,7 +372,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Innovative Learning Tools
+            {t("features.subtitle")}
           </motion.h2>
           <motion.p
             className="max-w-2xl mx-auto text-gray-300"
@@ -382,7 +381,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Our platform offers cutting-edge educational tools designed specifically for students who want to understand complex science subjects in Bangla and improve their English language skills with personalized AI assistance.
+            {t("features.description")}
           </motion.p>
         </div>
 
@@ -402,33 +401,39 @@ export default function LandingPage() {
                 <Beaker className="w-8 h-8 text-teal-400" />
               </div>
               <h3 className="mb-4 text-2xl font-bold transition-colors group-hover:text-teal-400">
-                Bengali Science Chatbot
+                {t("features.scienceTopics.title")}
               </h3>
               <p className="mb-6 text-gray-300">
-                Learn complex science concepts in Bengali. Our AI chatbot
-                explains Physics, Chemistry, Biology, and Math in simple terms
-                that are easy to understand.
+                {t("features.scienceTopics.description")}
               </p>
               <div className="flex flex-wrap gap-3 mb-6">
                 <div className="flex items-center gap-2 bg-[#164e63]/50 px-3 py-2 rounded-full">
                   <Atom className="w-4 h-4 text-teal-400" />
-                  <span className="text-sm">Physics</span>
+                  <span className="text-sm">
+                    {t("features.scienceTopics.physics")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#164e63]/50 px-3 py-2 rounded-full">
                   <Beaker className="w-4 h-4 text-teal-400" />
-                  <span className="text-sm">Chemistry</span>
+                  <span className="text-sm">
+                    {t("features.scienceTopics.chemistry")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#164e63]/50 px-3 py-2 rounded-full">
                   <Dna className="w-4 h-4 text-teal-400" />
-                  <span className="text-sm">Biology</span>
+                  <span className="text-sm">
+                    {t("features.scienceTopics.biology")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2 bg-[#164e63]/50 px-3 py-2 rounded-full">
                   <Calculator className="w-4 h-4 text-teal-400" />
-                  <span className="text-sm">Math</span>
+                  <span className="text-sm">
+                    {t("features.scienceTopics.math")}
+                  </span>
                 </div>
               </div>
               <button className="group bg-teal-500 hover:bg-teal-600 text-white px-5 py-2.5 rounded-lg flex items-center shadow-md shadow-teal-900/20 transition-all duration-300">
-                Try Now
+                {t("features.scienceTopics.cta")}
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </button>
             </div>
@@ -449,12 +454,10 @@ export default function LandingPage() {
                 <Mic className="w-8 h-8 text-purple-400" />
               </div>
               <h3 className="mb-4 text-2xl font-bold transition-colors group-hover:text-purple-400">
-                English Conversation Practice
+                {t("features.conversationPractice.title")}
               </h3>
               <p className="mb-6 text-gray-300">
-                Improve your English speaking skills with our AI conversation
-                partner. Practice pronunciation, vocabulary, and grammar in
-                real-time with personalized feedback.
+                {t("features.conversationPractice.description")}
               </p>
               <div className="relative h-16 mb-6">
                 <div className="absolute inset-0 flex items-center justify-center gap-1">
@@ -472,7 +475,7 @@ export default function LandingPage() {
                 </div>
               </div>
               <button className="group bg-purple-500 hover:bg-purple-600 text-white px-5 py-2.5 rounded-lg flex items-center shadow-md shadow-purple-900/20 transition-all duration-300">
-                Try Now
+                {t("features.conversationPractice.cta")}
                 <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
               </button>
             </div>
@@ -492,7 +495,7 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              How It Works
+              {t("howItWorks.title")}
             </motion.span>
             <motion.h2
               className="mb-6 text-3xl font-bold sm:text-4xl"
@@ -501,7 +504,7 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              Simple Steps to Start Learning
+              {t("howItWorks.subtitle")}
             </motion.h2>
             <motion.p
               className="max-w-2xl mx-auto text-gray-300"
@@ -510,35 +513,31 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              Our platform is designed to be intuitive and easy to use. Follow
-              these simple steps to begin your learning journey.
+              {t("howItWorks.description")}
             </motion.p>
           </div>
 
           <div className="mb-20">
             <h3 className="mb-10 text-2xl font-bold text-center text-teal-400">
-              Bengali Science Learning
+              {t("howItWorks.bengaliSectionTitle")}
             </h3>
             <div className="grid gap-8 md:grid-cols-3">
               {[
                 {
-                  title: "Ask Your Question",
-                  description:
-                    "Type your science question in Bengali or English. Our AI understands both languages.",
+                  title: t("howItWorks.step1.title"),
+                  description: t("howItWorks.step1.description"),
                   icon: <BookOpen className="w-10 h-10 text-teal-400" />,
                   delay: 0,
                 },
                 {
-                  title: "Get Clear Explanations",
-                  description:
-                    "Our AI explains complex concepts in simple Bengali with examples and visuals.",
+                  title: t("howItWorks.step2.title"),
+                  description: t("howItWorks.step2.description"),
                   icon: <Beaker className="w-10 h-10 text-teal-400" />,
                   delay: 0.2,
                 },
                 {
-                  title: "Practice & Learn",
-                  description:
-                    "Solve practice problems to reinforce your learning and track your progress.",
+                  title: t("howItWorks.step3.title"),
+                  description: t("howItWorks.step3.description"),
                   icon: <CheckCircle className="w-10 h-10 text-teal-400" />,
                   delay: 0.4,
                 },
@@ -579,28 +578,25 @@ export default function LandingPage() {
 
           <div>
             <h3 className="mb-10 text-2xl font-bold text-center text-purple-400">
-              English Conversation Practice
+              {t("howItWorks.englishSectionTitle")}
             </h3>
             <div className="grid gap-8 md:grid-cols-3">
               {[
                 {
-                  title: "Choose a Topic",
-                  description:
-                    "Select from various conversation topics or create your own personalized practice session.",
+                  title: t("howItWorks.englishStep1.title"),
+                  description: t("howItWorks.englishStep1.description"),
                   icon: <BookOpen className="w-10 h-10 text-purple-400" />,
                   delay: 0,
                 },
                 {
-                  title: "Speak Naturally",
-                  description:
-                    "Have a natural conversation with our AI assistant that adapts to your speaking level.",
+                  title: t("howItWorks.englishStep2.title"),
+                  description: t("howItWorks.englishStep2.description"),
                   icon: <Mic className="w-10 h-10 text-purple-400" />,
                   delay: 0.2,
                 },
                 {
-                  title: "Get Feedback",
-                  description:
-                    "Receive instant feedback on pronunciation, grammar, and vocabulary usage.",
+                  title: t("howItWorks.englishStep3.title"),
+                  description: t("howItWorks.englishStep3.description"),
                   icon: <CheckCircle className="w-10 h-10 text-purple-400" />,
                   delay: 0.4,
                 },
@@ -651,7 +647,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Benefits
+            {t("benefits.title")}
           </motion.span>
           <motion.h2
             className="mb-6 text-3xl font-bold sm:text-4xl"
@@ -660,7 +656,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Why Choose Our Platform
+            {t("benefits.subtitle")}
           </motion.h2>
           <motion.p
             className="max-w-2xl mx-auto text-gray-300"
@@ -669,17 +665,15 @@ export default function LandingPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Our platform offers unique advantages that make learning science and
-            English both effective and enjoyable.
+            {t("benefits.description")}
           </motion.p>
         </div>
 
         <div className="grid max-w-6xl grid-cols-1 gap-8 px-4 mx-auto sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
           {[
             {
-              title: "Learn in Your Language",
-              description:
-                "Understand complex science concepts explained in Bengali, making learning more accessible.",
+              title: t("benefits.benefit1.title"),
+              description: t("benefits.benefit1.description"),
               color: "from-teal-500/20 to-teal-500/5",
               borderColor: "border-teal-500/30",
               hoverBorderColor: "hover:border-teal-500/60",
@@ -689,9 +683,8 @@ export default function LandingPage() {
               delay: 0,
             },
             {
-              title: "Practice English Anytime",
-              description:
-                "Improve your English speaking skills with AI conversations available 24/7.",
+              title: t("benefits.benefit2.title"),
+              description: t("benefits.benefit2.description"),
               color: "from-purple-500/20 to-purple-500/5",
               borderColor: "border-purple-500/30",
               hoverBorderColor: "hover:border-purple-500/60",
@@ -701,9 +694,8 @@ export default function LandingPage() {
               delay: 0.1,
             },
             {
-              title: "Personalized Learning",
-              description:
-                "Get customized explanations and practice based on your understanding and progress.",
+              title: t("benefits.benefit3.title"),
+              description: t("benefits.benefit3.description"),
               color: "from-blue-500/20 to-blue-500/5",
               borderColor: "border-blue-500/30",
               hoverBorderColor: "hover:border-blue-500/60",
@@ -754,25 +746,24 @@ export default function LandingPage() {
             transition={{ duration: 0.7 }}
           >
             <h2 className="mb-6 text-3xl font-bold md:text-4xl">
-              Ready to Transform Your Learning Experience?
+              {t("cta.title")}
             </h2>
             <p className="max-w-2xl mx-auto mb-10 text-gray-300">
-              Join thousands of students who are already benefiting from our
-              AI-powered educational platform. Start your journey today!
+              {t("cta.subtitle")}
             </p>
             <div className="flex flex-col justify-center gap-5 sm:flex-row">
               <a
                 href="/auth?tab=signup"
                 className="group bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-8 py-4 text-lg rounded-md flex items-center justify-center shadow-lg shadow-teal-900/20 transform transition-all duration-300 hover:translate-y-[-2px] hover:shadow-xl hover:shadow-teal-900/30"
               >
-                Get Started Now
+                {t("cta.getStarted")}
                 <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#features"
                 className="group border-2 border-white/30 text-white hover:border-white/50 hover:bg-white/5 px-8 py-4 text-lg rounded-md flex items-center justify-center shadow-lg shadow-teal-900/10 transform transition-all duration-300 hover:translate-y-[-2px]"
               >
-                Learn More
+                {t("cta.learnMore")}
               </a>
             </div>
           </motion.div>
@@ -791,10 +782,7 @@ export default function LandingPage() {
                   className="w-auto h-16"
                 />
               </div>
-              <p className="mb-6 text-gray-400">
-                AI-powered educational platform for Bengali science learning and
-                English conversation practice.
-              </p>
+              <p className="mb-6 text-gray-400">{t("footer.description")}</p>
               <div className="flex gap-4">
                 <a
                   href="#"
@@ -856,14 +844,16 @@ export default function LandingPage() {
             </div>
 
             <div>
-              <h4 className="mb-6 text-lg font-bold">Navigation</h4>
+              <h4 className="mb-6 text-lg font-bold">
+                {t("footer.navigation.title")}
+              </h4>
               <ul className="space-y-3">
                 <li>
                   <a
                     href="#"
                     className="text-gray-400 transition-colors hover:text-teal-400"
                   >
-                    Home
+                    {t("footer.navigation.home")}
                   </a>
                 </li>
                 <li>
@@ -871,7 +861,7 @@ export default function LandingPage() {
                     href="#features"
                     className="text-gray-400 transition-colors hover:text-teal-400"
                   >
-                    Features
+                    {t("footer.navigation.features")}
                   </a>
                 </li>
                 <li>
@@ -879,7 +869,7 @@ export default function LandingPage() {
                     href="#how-it-works"
                     className="text-gray-400 transition-colors hover:text-teal-400"
                   >
-                    How It Works
+                    {t("footer.navigation.howItWorks")}
                   </a>
                 </li>
                 <li>
@@ -887,14 +877,16 @@ export default function LandingPage() {
                     href="#benefits"
                     className="text-gray-400 transition-colors hover:text-teal-400"
                   >
-                    Benefits
+                    {t("footer.navigation.benefits")}
                   </a>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h4 className="mb-6 text-lg font-bold">Contact</h4>
+              <h4 className="mb-6 text-lg font-bold">
+                {t("footer.contact.title")}
+              </h4>
               <ul className="space-y-3">
                 <li className="flex items-start text-gray-400">
                   <svg
@@ -912,7 +904,7 @@ export default function LandingPage() {
                     <rect width="20" height="16" x="2" y="4" rx="2" />
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                   </svg>
-                  <span>info@openlearn.com</span>
+                  <span>{t("footer.contact.email")}</span>
                 </li>
                 <li className="flex items-start text-gray-400">
                   <svg
@@ -929,7 +921,7 @@ export default function LandingPage() {
                   >
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
-                  <span>+880 1234 567890</span>
+                  <span>{t("footer.contact.phone")}</span>
                 </li>
                 <li className="flex items-start text-gray-400">
                   <svg
@@ -947,25 +939,29 @@ export default function LandingPage() {
                     <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>Dhaka, Bangladesh</span>
+                  <span>{t("footer.contact.address")}</span>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h4 className="mb-6 text-lg font-bold">Language</h4>
+              <h4 className="mb-6 text-lg font-bold">
+                {t("footer.language.title")}
+              </h4>
               <button
                 className="border border-teal-400 text-teal-400 hover:bg-teal-400/10 transition-colors px-5 py-2.5 rounded-md mb-6 w-full sm:w-auto"
                 onClick={toggleLanguage}
               >
-                {language === "en" ? "Switch to Bengali" : "Switch to English"}
+                {language === "en"
+                  ? t("footer.language.switchToBengali")
+                  : t("footer.language.switchToEnglish")}
               </button>
             </div>
           </div>
 
           <div className="pt-8 mt-12 text-center text-gray-400 border-t border-gray-800">
             <p>
-              &copy; {new Date().getFullYear()} OpenLearn. All rights reserved.
+              &copy; {new Date().getFullYear()} {t("footer.copyright")}
             </p>
           </div>
         </div>
