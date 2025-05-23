@@ -11,10 +11,8 @@ const AuthCallback = () => {
     const timer = setTimeout(() => {
       if (!isLoading) {
         if (user) {
-          console.log("User is authenticated, redirecting to dashboard");
           navigate("/dashboard", { replace: true });
         } else {
-          console.log("Authentication failed, redirecting to auth page");
           navigate("/auth", { replace: true });
         }
       }
