@@ -106,10 +106,17 @@ export default function LandingPage() {
               </ul>
             </nav>
 
+            <button
+              onClick={toggleLanguage}
+              className="px-3 py-1.5 text-sm text-gray-300 transition-colors border border-gray-600 rounded-md hover:bg-gray-700/50 hover:text-white"
+              aria-label={language === "en" ? "Switch to Bengali" : "Switch to English"}
+            >
+              {language === "en" ? "বাংলা" : "English"}
+            </button>
             {user ? (
               <Link
                 to="/dashboard"
-                className="flex items-center px-4 py-2 text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
+                className="flex items-center px-4 py-2 ml-2 text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
               >
                 {t("nav.dashboard")}
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -118,13 +125,13 @@ export default function LandingPage() {
               <>
                 <Link
                   to="/auth"
-                  className="px-4 py-2 text-teal-400 transition-colors border border-teal-400 rounded-md hover:bg-teal-400/10"
+                  className="px-4 py-2 ml-2 text-teal-400 transition-colors border border-teal-400 rounded-md hover:bg-teal-400/10"
                 >
                   {t("nav.login")}
                 </Link>
                 <Link
                   to="/auth?tab=signup"
-                  className="px-4 py-2 text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
+                  className="px-4 py-2 ml-2 text-white transition-colors bg-teal-500 rounded-md hover:bg-teal-600"
                 >
                   {t("nav.signup")}
                 </Link>
