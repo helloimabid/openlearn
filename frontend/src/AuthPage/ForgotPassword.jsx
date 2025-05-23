@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { BookOpen, Mail, ArrowLeft, CheckCircle } from "lucide-react"
 import { useAuth } from "../contexts/auth-context"
-
+import { useLocation, useNavigate, Link } from "react-router-dom";
 export default function ForgotPassword() {
   const { resetPassword } = useAuth()
   const [email, setEmail] = useState("")
@@ -30,20 +30,20 @@ export default function ForgotPassword() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a192f] to-[#164e63] flex flex-col items-center justify-center p-4">
-      <div className="fixed top-0 inset-0 pointer-events-none">
+      <div className="fixed inset-0 top-0 pointer-events-none">
         <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="absolute top-[30%] -left-40 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-3xl"></div>
       </div>
 
-      <a href="/auth" className="absolute top-6 left-6 text-white hover:text-teal-400 flex items-center gap-2 z-10">
-        <ArrowLeft className="h-5 w-5" />
+      <Link to="/auth" className="absolute z-10 flex items-center gap-2 text-white top-6 left-6 hover:text-teal-400">
+        <ArrowLeft className="w-5 h-5" />
         <span>Back to Login</span>
-      </a>
+      </Link>
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="relative z-10 w-full max-w-md">
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-8 w-8 text-teal-400" />
+            <BookOpen className="w-8 h-8 text-teal-400" />
             <span className="text-xl font-bold text-white">EduBengali</span>
           </div>
         </div>
@@ -56,21 +56,21 @@ export default function ForgotPassword() {
         >
           <div className="p-6 border-b border-gray-700/50">
             <h2 className="text-2xl font-bold">Reset Your Password</h2>
-            <p className="text-gray-400 mt-2">
+            <p className="mt-2 text-gray-400">
               Enter your email address and we'll send you a link to reset your password.
             </p>
           </div>
           <div className="p-6">
             {success ? (
-              <div className="text-center py-8">
-                <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Email Sent!</h3>
-                <p className="text-gray-300 mb-6">
+              <div className="py-8 text-center">
+                <CheckCircle className="w-16 h-16 mx-auto mb-4 text-green-500" />
+                <h3 className="mb-2 text-xl font-bold">Email Sent!</h3>
+                <p className="mb-6 text-gray-300">
                   Check your inbox for instructions to reset your password. If you don't see it, check your spam folder.
                 </p>
                 <a
                   href="/auth"
-                  className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 inline-block"
+                  className="inline-block px-6 py-2 font-medium text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700"
                 >
                   Return to Login
                 </a>
@@ -98,10 +98,10 @@ export default function ForgotPassword() {
                   </div>
 
                   {error && (
-                    <div className="bg-red-500/20 border border-red-500/50 text-white p-3 rounded-md flex items-center gap-2">
+                    <div className="flex items-center gap-2 p-3 text-white border rounded-md bg-red-500/20 border-red-500/50">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 flex-shrink-0"
+                        className="flex-shrink-0 w-5 h-5"
                         viewBox="0 0 20 20"
                         fill="currentColor"
                       >
@@ -123,7 +123,7 @@ export default function ForgotPassword() {
                   >
                     {isSubmitting ? (
                       <svg
-                        className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                        className="w-5 h-5 mr-2 -ml-1 text-white animate-spin"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
