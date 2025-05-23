@@ -179,7 +179,7 @@ export const AuthProvider = ({ children }) => {
       setError(null);
 
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: getRedirectUrl("/auth/reset-password"),
+        redirectTo: getRedirectUrl("/#/auth/reset-password"),
       });
 
       if (error) throw error;
