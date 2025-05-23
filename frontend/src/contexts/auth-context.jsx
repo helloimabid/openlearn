@@ -31,21 +31,21 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true);
         console.log("Checking user session...");
 
-        // Check active session
+        // Use getSession instead of getUser to avoid AuthSessionMissingError
         const {
-          data: { user },
+          data: { session },
           error,
-        } = await supabase.auth.getUser();
+        } = await supabase.auth.getSession();
 
-        console.log("Session data:", user);
+        console.log("Session data:", session);
 
         if (error) {
           throw error;
         }
 
-        if (user) {
-          setUser(user);
-          console.log("User authenticated:", user.email);
+        if (session?.user) {
+          setUser(session.user);
+          console.log("User authenticated:", session.user.email);
         } else {
           setUser(null);
           console.log("No active session found");
