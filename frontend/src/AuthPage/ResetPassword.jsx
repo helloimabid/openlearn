@@ -1,88 +1,100 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
-import { motion } from "framer-motion"
-import { BookOpen, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react"
-import { getSupabase } from "../lib/supabase-client"
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  BookOpen,
+  Lock,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
+import { getSupabase } from "../lib/supabase-client";
 
 export default function ResetPassword() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(false)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   // Extract token from URL
   useEffect(() => {
     // URL pattern: /auth/reset-password#access_token=...&token_type=...
-    const hash = location.hash
+    const hash = location.hash;
     if (!hash || hash.length < 2) {
-      setError("Invalid or missing reset token. Please request a new password reset link.")
-      return
+      setError(
+        "Invalid or missing reset token. Please request a new password reset link."
+      );
+      return;
     }
-  }, [location])
+  }, [location]);
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setError(null)
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
 
     // Check if passwords match
     if (password !== confirmPassword) {
-      setError("Passwords do not match")
-      setIsSubmitting(false)
-      return
+      setError("Passwords do not match");
+      setIsSubmitting(false);
+      return;
     }
 
     // Extract token from URL hash
-    const hash = location.hash.substring(1)
-    const params = new URLSearchParams(hash)
-    const accessToken = params.get("access_token")
+    const hash = location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get("access_token");
 
     try {
-      const supabase = getSupabase()
+      const supabase = getSupabase();
 
       // Use the token to set the new password
       const { error } = await supabase.auth.updateUser({
         password: password,
-      })
+      });
 
-      if (error) throw error
+      if (error) throw error;
 
-      setSuccess(true)
+      setSuccess(true);
+
+      // Sign out the user after password reset
+      await supabase.auth.signOut();
 
       // After 3 seconds, redirect to login
       setTimeout(() => {
-        navigate("/auth")
-      }, 3000)
+        navigate("/auth");
+      }, 3000);
     } catch (error) {
-      console.error("Password reset error:", error.message)
-      setError(error.message || "Failed to reset password. Please try again.")
+      console.error("Password reset error:", error.message);
+      setError(error.message || "Failed to reset password. Please try again.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a192f] to-[#164e63] flex flex-col items-center justify-center p-4">
-      <div className="fixed top-0 inset-0 pointer-events-none">
+      <div className="fixed inset-0 top-0 pointer-events-none">
         <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-3xl"></div>
         <div className="absolute top-[30%] -left-40 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="w-full max-w-md relative z-10">
+      <div className="relative z-10 w-full max-w-md">
         <div className="flex justify-center mb-8">
           <div className="flex items-center gap-2">
-            <BookOpen className="h-8 w-8 text-teal-400" />
-            <span className="text-xl font-bold text-white">EduBengali</span>
+            <BookOpen className="w-8 h-8 text-teal-400" />
+            <span className="text-xl font-bold text-white">OpenLearn</span>
           </div>
         </div>
 
@@ -94,30 +106,38 @@ export default function ResetPassword() {
         >
           <div className="p-6 border-b border-gray-700/50">
             <h2 className="text-2xl font-bold">Reset Your Password</h2>
-            <p className="text-gray-400 mt-2">Create a new password for your account.</p>
+            <p className="mt-2 text-gray-400">
+              Create a new password for your account.
+            </p>
           </div>
 
           <div className="p-6">
             {success ? (
-              <div className="text-center py-8">
-                <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Password Reset Successfully!</h3>
-                <p className="text-gray-300 mb-6">
-                  Your password has been reset. You'll be redirected to the login page in a few seconds.
+              <div className="py-8 text-center">
+                <CheckCircle className="w-16 h-16 mx-auto mb-4 text-green-500" />
+                <h3 className="mb-2 text-xl font-bold">
+                  Password Reset Successfully!
+                </h3>
+                <p className="mb-6 text-gray-300">
+                  Your password has been reset. You'll be redirected to the
+                  login page in a few seconds.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
                 <div className="space-y-5">
                   {error && (
-                    <div className="bg-red-500/20 border border-red-500/50 text-white p-3 rounded-md flex items-center gap-2">
-                      <AlertCircle className="h-5 w-5 flex-shrink-0" />
+                    <div className="flex items-center gap-2 p-3 text-white border rounded-md bg-red-500/20 border-red-500/50">
+                      <AlertCircle className="flex-shrink-0 w-5 h-5" />
                       <span>{error}</span>
                     </div>
                   )}
 
                   <div className="space-y-2">
-                    <label htmlFor="password" className="block text-sm font-medium">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium"
+                    >
                       New Password
                     </label>
                     <div className="relative">
@@ -134,15 +154,24 @@ export default function ResetPassword() {
                         type="button"
                         onClick={togglePasswordVisibility}
                         className="absolute right-3 top-3.5 text-gray-400 hover:text-white transition-colors"
-                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        aria-label={
+                          showPassword ? "Hide password" : "Show password"
+                        }
                       >
-                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                        {showPassword ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium">
+                    <label
+                      htmlFor="confirmPassword"
+                      className="block text-sm font-medium"
+                    >
                       Confirm New Password
                     </label>
                     <div className="relative">
@@ -166,7 +195,7 @@ export default function ResetPassword() {
                   >
                     {isSubmitting ? (
                       <svg
-                        className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                        className="w-5 h-5 mr-2 -ml-1 text-white animate-spin"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -195,5 +224,5 @@ export default function ResetPassword() {
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
