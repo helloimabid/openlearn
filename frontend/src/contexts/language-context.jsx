@@ -86,7 +86,7 @@ const translations = {
     "nav.signup": "Sign Up",
     "nav.switchToBangla": "বাংলা",
     "nav.benefits": "Benefits",
-
+    "nav.dashboard": "Dashboard",
     // CTA section
     "cta.title": "Ready to Start Learning?",
     "cta.subtitle":
@@ -194,7 +194,7 @@ const translations = {
     "nav.signup": "সাইন আপ",
     "nav.switchToEnglish": "English",
     "nav.benefits": "সুবিধাসমূহ",
-
+    "nav.dashboard": "ড্যাশবোর্ড",
     // CTA section
     "cta.title": "শিখতে শুরু করতে প্রস্তুত?",
     "cta.subtitle":
