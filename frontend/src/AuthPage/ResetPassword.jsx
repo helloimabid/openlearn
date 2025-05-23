@@ -76,7 +76,6 @@ export default function ResetPassword() {
         navigate("/auth");
       }, 3000);
     } catch (error) {
-      console.error("Password reset error:", error.message);
       setError(error.message || "Failed to reset password. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -226,3 +225,6 @@ export default function ResetPassword() {
     </div>
   );
 }
+
+// NOTE: When sending the password reset email from your backend or Supabase client, set the redirectTo parameter to your reset password page, e.g.:
+// supabase.auth.resetPasswordForEmail(email, { redirectTo: 'https://yourdomain.com/auth/reset-password' })
