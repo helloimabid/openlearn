@@ -512,7 +512,7 @@ const ChatBot = () => {
                        <Bot size={14} className="text-white sm:size-5" />
                     </div>
                     <div className="p-2.5 sm:p-4 rounded-2xl shadow-md backdrop-blur-sm bg-gradient-to-r from-teal-700/90 to-teal-900/90 text-white border border-teal-600/30">
-                      <p className="text-xs leading-relaxed sm:text-sm italic">বট লিখছে...</p>
+                      <p className="text-xs leading-relaxed sm:text-sm italic">ভাবছি...</p>
                     </div>
                   </div>
                 </div>
